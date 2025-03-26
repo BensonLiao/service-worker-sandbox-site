@@ -8,5 +8,22 @@
   <body>
     <h1>Service Worker Test Site</h1>
     <script type="module" src="index.js"></script>
+    <script type="module">
+      import { mt } from './index.js';
+      let defaultConfig = {
+        tagId: 'OA-c19eb6',
+        clientId: 'client5566',
+        userId: 'user5566',
+        title: '嗨～想知道更多5566的資訊嗎？',
+        content: '立即訂閱網頁推播吧！',
+        confirmText: '訂閱',
+        cancelText: '取消',
+        delaySeconds: 0,
+        resubscribeIntervalDays: 1,
+        isActive: true,
+        subpath: '/',
+      };
+      mt(defaultConfig);
+    </script>
   </body>
 </html>
