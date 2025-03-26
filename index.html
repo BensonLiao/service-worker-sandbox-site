@@ -9,7 +9,7 @@
     <h1>Service Worker Test Site</h1>
     <script type="module" src="index.js"></script>
     <script type="module">
-      import { mt } from './index.js';
+      import init from './index.js';
       let defaultConfig = {
         tagId: 'OA-c19eb6',
         clientId: 'client5566',
@@ -23,7 +23,7 @@
         isActive: true,
         subpath: '/',
       };
-      mt(defaultConfig);
+      init(defaultConfig);
     </script>
   </body>
 </html>
