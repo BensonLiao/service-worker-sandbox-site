@@ -24,6 +24,7 @@ function postMessageToClients(message) {
   let clientData = {};
 
   self.addEventListener('install', () => {
+    console.log('install and activate');
     const url = new URL(self.location);
     serviceWorkerMessageType = url.searchParams.get('serviceWorkerMessageType');
     self.skipWaiting();
@@ -76,6 +77,7 @@ function postMessageToClients(message) {
       postMessageToClients({ type: 'omnitag-error', payload: { error } });
     }
 
+    console.log('showNotification', title);
     self.registration.showNotification(title, {
       body,
       icon,
