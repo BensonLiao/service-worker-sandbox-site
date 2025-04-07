@@ -84,7 +84,7 @@ function postMessageToClients(message) {
         icon,
         image: photo,
         data: { url },
-      }); 
+      })
     );
     // console.log('showNotification', title);
     // self.registration.showNotification(title, {
