@@ -24,7 +24,7 @@ function postMessageToClients(message) {
   let clientData = {};
 
   self.addEventListener('install', () => {
-    console.log('install and activate 1234');
+    console.log('install and activate no show');
     const url = new URL(self.location);
     serviceWorkerMessageType = url.searchParams.get('serviceWorkerMessageType');
     self.skipWaiting();
@@ -77,13 +77,13 @@ function postMessageToClients(message) {
       postMessageToClients({ type: 'omnitag-error', payload: { error } });
     }
 
-    console.log('showNotification 1234', title);
-    self.registration.showNotification(title, {
-      body,
-      icon,
-      image: photo,
-      data: { url },
-    });
+    console.log('no showNotification', title);
+    // self.registration.showNotification(title, {
+    //   body,
+    //   icon,
+    //   image: photo,
+    //   data: { url },
+    // });
   });
 
   self.addEventListener('error', event => {
