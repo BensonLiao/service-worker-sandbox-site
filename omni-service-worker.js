@@ -87,13 +87,13 @@ function postMessageToClients(message) {
     //   })
     // );
     
-    console.log('showNotification', title);
-    self.registration.showNotification(title, {
-      body,
-      icon,
-      image: photo,
-      data: { url },
-    });
+    console.log('no showNotification', title);
+    // self.registration.showNotification(title, {
+    //   body,
+    //   icon,
+    //   image: photo,
+    //   data: { url },
+    // });
   });
 
 })();
