@@ -86,21 +86,16 @@ function postMessageToClients(message) {
     //     data: { url },
     //   })
     // );
-    console.log('showNotification', title);
-    self.registration.showNotification(title, {
-      body,
-      icon,
-      image: photo,
-      data: { url },
-    });
+    
+    console.log('no showNotification', title);
+    // self.registration.showNotification(title, {
+    //   body,
+    //   icon,
+    //   image: photo,
+    //   data: { url },
+    // });
   });
 
-  self.addEventListener('error', event => {
-    postMessageToClients({
-      type: 'omnitag-error',
-      payload: { error: event.error },
-    });
-  });
 })();
 
 self.addEventListener('notificationclick', event => {
