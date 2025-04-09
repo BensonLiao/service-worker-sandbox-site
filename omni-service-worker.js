@@ -94,7 +94,34 @@ function postMessageToClients(message) {
     //   image: photo,
     //   data: { url },
     // });
-  });
+
+    // console.log('showNotification when focused', title);
+    // Retrieve a list of the clients of this service worker.
+    //   self.clients.matchAll().then(function(clientList) {
+    //     // Check if there's at least one focused client.
+    //     const focused = clientList.some(function(client) {
+    //       return client.focused;
+    //     });
+  
+    //     var notificationMessage;
+    //     if (focused) {
+    //       notificationMessage = 'You\'re still here, thanks!';
+    //     } else {
+    //       console.log()
+    //     }
+  
+    //     // Show a notification with title 'ServiceWorker Cookbook' and body depending
+    //     // on the state of the clients of the service worker (three different bodies:
+    //     // 1, the page is focused; 2, the page is still open but unfocused; 3, the page
+    //     // is closed).
+    //     return self.registration.showNotification(title, {
+    //       body,
+    //       icon,
+    //       image: photo,
+    //       data: { url },
+    //     });
+    //   })
+    // });
 
 })();
 
