@@ -39,7 +39,7 @@ function postMessageToClients(message) {
     }
   });
 
-  self.addEventListener('push', event => {
+  self.addEventListener('push', async event => {
     const {
       title,
       body,
@@ -69,7 +69,6 @@ function postMessageToClients(message) {
         }),
       })
     );
-    const location = new URL(self.location);
     try {
       fetch(`http://localhost:8000/collect?${params}`);
     } catch (error) {
@@ -87,7 +86,7 @@ function postMessageToClients(message) {
     //   })
     // );
 
-    console.log('no showNotification', title);
+    // console.log('no showNotification', title);
     // self.registration.showNotification(title, {
     //   body,
     //   icon,
@@ -95,40 +94,52 @@ function postMessageToClients(message) {
     //   data: { url },
     // });
 
-    // console.log('showNotification when focused', title);
-    // Retrieve a list of the clients of this service worker.
-    //   self.clients.matchAll().then(function(clientList) {
-    //     // Check if there's at least one focused client.
-    //     const focused = clientList.some(function(client) {
-    //       return client.focused;
-    //     });
+    console.log('delay showNotification and check if focused', title);
+    await new Promise(resolve => setTimeout(resolve, 4000));
+    self.clients.matchAll().then(clientList => {
+      // Check if there's at least one focused client.
+      const focused = clientList.some(client => client.focused);
+      let additionalBody = '';
 
-    //     var notificationMessage;
-    //     if (focused) {
-    //       notificationMessage = 'You\'re still here, thanks!';
-    //     } else {
-    //       console.log()
-    //     }
+      if (focused) {
+        additionalBody = 'The page is focused.';
+      } else if (clientList.length > 0) {
+        additionalBody = "You haven't closed the page, click here to focus it.";
+      } else {
+        additionalBody = 'The page is not focused.';
+      }
 
-    //     // Show a notification with title 'ServiceWorker Cookbook' and body depending
-    //     // on the state of the clients of the service worker (three different bodies:
-    //     // 1, the page is focused; 2, the page is still open but unfocused; 3, the page
-    //     // is closed).
-    //     return self.registration.showNotification(title, {
-    //       body,
-    //       icon,
-    //       image: photo,
-    //       data: { url },
-    //     });
-    //   })
-    // });
+      console.log(additionalBody);
+
+      // Show a notification with body depending
+      // on the state of the clients of the service worker (three different bodies:
+      // 1, the page is focused; 2, the page is still open but unfocused; 3, the page
+      // is closed).
+      return self.registration.showNotification(title, {
+        body: `${body} (${additionalBody})`,
+        icon,
+        image: photo,
+        data: { url },
+      });
+    });
   });
 })();
 
 self.addEventListener('notificationclick', event => {
   // eslint-disable-next-line no-undef
-  clients.openWindow(event.notification.data.url);
-  event.notification.close();
+  event.waitUntil(
+    // Retrieve a list of the clients of this service worker.
+    self.clients.matchAll().then(clientList => {
+      // If there is at least one client, focus it.
+      if (clientList.length > 0) {
+        return clientList[0].focus();
+      }
+
+      // Otherwise, open a new page.
+      self.clients.openWindow(event.notification.data.url);
+      return event.notification.close();
+    })
+  );
 });
 
 // Export for testing purposes in Node environment
