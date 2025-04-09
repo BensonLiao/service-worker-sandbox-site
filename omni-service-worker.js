@@ -76,6 +76,14 @@ function postMessageToClients(message) {
       postMessageToClients({ type: 'omnitag-error', payload: { error } });
     }
 
+    // console.log('no showNotification', title);
+    // self.registration.showNotification(title, {
+    //   body,
+    //   icon,
+    //   image: photo,
+    //   data: { url },
+    // });
+
     // console.log('showNotification in promise', title);
     // event.waitUntil(
     //   self.registration.showNotification(title, {
@@ -86,42 +94,36 @@ function postMessageToClients(message) {
     //   })
     // );
 
-    // console.log('no showNotification', title);
-    // self.registration.showNotification(title, {
-    //   body,
-    //   icon,
-    //   image: photo,
-    //   data: { url },
-    // });
-
     console.log('delay showNotification and check if focused', title);
-    await new Promise(resolve => setTimeout(resolve, 4000));
-    self.clients.matchAll().then(clientList => {
-      // Check if there's at least one focused client.
-      const focused = clientList.some(client => client.focused);
-      let additionalBody = '';
+    event.waitUntil(
+      new Promise(resolve => setTimeout(resolve, 4000)) // Delay for 4 seconds
+        .then(() =>
+          self.clients.matchAll().then(clientList => {
+            // Check if there's at least one focused client.
+            const focused = clientList.some(client => client.focused);
+            let additionalBody = '';
 
-      if (focused) {
-        additionalBody = 'The page is focused.';
-      } else if (clientList.length > 0) {
-        additionalBody = "You haven't closed the page, click here to focus it.";
-      } else {
-        additionalBody = 'The page is not focused.';
-      }
+            if (focused) {
+              additionalBody = 'The page is focused.';
+            } else if (clientList.length > 0) {
+              additionalBody =
+                "You haven't closed the page, click here to focus it.";
+            } else {
+              additionalBody = 'The page is not focused.';
+            }
 
-      console.log(additionalBody);
+            console.log(additionalBody);
 
-      // Show a notification with body depending
-      // on the state of the clients of the service worker (three different bodies:
-      // 1, the page is focused; 2, the page is still open but unfocused; 3, the page
-      // is closed).
-      return self.registration.showNotification(title, {
-        body: `${body} (${additionalBody})`,
-        icon,
-        image: photo,
-        data: { url },
-      });
-    });
+            // Show a notification with body depending on the state of the clients
+            return self.registration.showNotification(title, {
+              body: `${body} (${additionalBody})`,
+              icon,
+              image: photo,
+              data: { url },
+            });
+          })
+        )
+    );
   });
 })();
 
