@@ -86,7 +86,7 @@ function postMessageToClients(message) {
     //     data: { url },
     //   })
     // );
-    
+
     console.log('no showNotification', title);
     // self.registration.showNotification(title, {
     //   body,
@@ -102,14 +102,14 @@ function postMessageToClients(message) {
     //     const focused = clientList.some(function(client) {
     //       return client.focused;
     //     });
-  
+
     //     var notificationMessage;
     //     if (focused) {
     //       notificationMessage = 'You\'re still here, thanks!';
     //     } else {
     //       console.log()
     //     }
-  
+
     //     // Show a notification with title 'ServiceWorker Cookbook' and body depending
     //     // on the state of the clients of the service worker (three different bodies:
     //     // 1, the page is focused; 2, the page is still open but unfocused; 3, the page
@@ -122,7 +122,7 @@ function postMessageToClients(message) {
     //     });
     //   })
     // });
-
+  });
 })();
 
 self.addEventListener('notificationclick', event => {
