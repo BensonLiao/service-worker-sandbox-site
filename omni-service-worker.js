@@ -84,44 +84,44 @@ function postMessageToClients(message) {
     //   data: { url },
     // });
 
-    console.log('showNotification in promise', title);
-    event.waitUntil(
-      self.registration.showNotification(title, {
-        body,
-        icon,
-        image: photo,
-        data: { url },
-      })
-    );
+    // console.log('showNotification in promise', title);
+    // event.waitUntil(
+    //   self.registration.showNotification(title, {
+    //     body,
+    //     icon,
+    //     image: photo,
+    //     data: { url },
+    //   })
+    // );
 
-    // console.log('delay showNotification and check if focused', title);
-    // new Promise(resolve => setTimeout(resolve, 4000)) // Delay for 4 seconds
-    //   .then(() =>
-    //     self.clients.matchAll().then(clientList => {
-    //       // Check if there's at least one focused client.
-    //       const focused = clientList.some(client => client.focused);
-    //       let additionalBody = '';
+    console.log('delay showNotification and check if focused', title);
+    new Promise(resolve => setTimeout(resolve, 4000)) // Delay for 4 seconds
+      .then(() =>
+        self.clients.matchAll().then(clientList => {
+          // Check if there's at least one focused client.
+          const focused = clientList.some(client => client.focused);
+          let additionalBody = '';
 
-    //       if (focused) {
-    //         additionalBody = 'The page is focused.';
-    //       } else if (clientList.length > 0) {
-    //         additionalBody =
-    //           "You haven't closed the page, click here to focus it.";
-    //       } else {
-    //         additionalBody = 'The page is not focused.';
-    //       }
+          if (focused) {
+            additionalBody = 'The page is focused.';
+          } else if (clientList.length > 0) {
+            additionalBody =
+              "You haven't closed the page, click here to focus it.";
+          } else {
+            additionalBody = 'The page is not focused.';
+          }
 
-    //       console.log(additionalBody);
+          console.log(additionalBody);
 
-    //       // Show a notification with body depending on the state of the clients
-    //       return self.registration.showNotification(title, {
-    //         body: `${body} (${additionalBody})`,
-    //         icon,
-    //         image: photo,
-    //         data: { url },
-    //       });
-    //     })
-    //   );
+          // Show a notification with body depending on the state of the clients
+          return self.registration.showNotification(title, {
+            body: `${body} (${additionalBody})`,
+            icon,
+            image: photo,
+            data: { url },
+          });
+        })
+      );
   });
 })();
 
