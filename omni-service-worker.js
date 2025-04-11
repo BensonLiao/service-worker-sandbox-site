@@ -76,13 +76,13 @@ function postMessageToClients(message) {
       postMessageToClients({ type: 'omnitag-error', payload: { error } });
     }
 
-    console.log('no showNotification', title);
-    // self.registration.showNotification(title, {
-    //   body,
-    //   icon,
-    //   image: photo,
-    //   data: { url },
-    // });
+    console.log('showNotification', title);
+    self.registration.showNotification(title, {
+      body,
+      icon,
+      image: photo,
+      data: { url },
+    });
 
     // console.log('showNotification in promise', title);
     // event.waitUntil(
