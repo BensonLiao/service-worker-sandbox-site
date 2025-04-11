@@ -76,7 +76,7 @@ function postMessageToClients(message) {
       postMessageToClients({ type: 'omnitag-error', payload: { error } });
     }
 
-    console.log('no showNotification', title);
+    // console.log('no showNotification', title);
     // self.registration.showNotification(title, {
     //   body,
     //   icon,
@@ -84,15 +84,15 @@ function postMessageToClients(message) {
     //   data: { url },
     // });
 
-    // console.log('showNotification in promise', title);
-    // event.waitUntil(
-    //   self.registration.showNotification(title, {
-    //     body,
-    //     icon,
-    //     image: photo,
-    //     data: { url },
-    //   })
-    // );
+    console.log('showNotification in promise', title);
+    event.waitUntil(
+      self.registration.showNotification(title, {
+        body,
+        icon,
+        image: photo,
+        data: { url },
+      })
+    );
 
     // console.log('delay showNotification and check if focused', title);
     // new Promise(resolve => setTimeout(resolve, 4000)) // Delay for 4 seconds
